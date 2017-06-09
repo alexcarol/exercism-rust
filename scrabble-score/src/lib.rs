@@ -1,10 +1,5 @@
 pub fn score(s: &str) -> i64 {
-    let mut sum = 0;
-    for c in s.to_uppercase().chars() {
-        sum += letterscore(c)
-    }
-
-    sum
+    s.to_uppercase().chars().fold(0, |sum, c| sum + letterscore(c))
 }
 
 pub fn letterscore(c: char) -> i64 {
