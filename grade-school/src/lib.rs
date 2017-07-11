@@ -1,21 +1,30 @@
-use std::collections::HashSet;
-
+#[allow(unused_variables)]
 
 pub struct School {
-    grades: HashSet<u32>,
+    grades: Vec<u32>,
 }
 
 impl School {
     pub fn new() -> School {
-        School { grades: HashSet::new() }
+        School { grades: vec![] }
     }
 
     pub fn add(&mut self, grade: u32, student: &str) {
-        self.grades.insert(grade);
+        self.grades.push(grade);
+        self.grades.sort();
     }
 
     pub fn grades(&self) -> Vec<u32> {
-        (self.grades.into_iter().collect::<Vec<u32>>()).to_vec()
+        let mut last: u32 = 123412;
+        self.grades
+            .iter()
+            .map(|grade| *grade)
+            .filter(|grade| {
+                let equals_last = last == *grade;
+                last = *grade;
+                !equals_last
+            })
+            .collect::<Vec<u32>>()
     }
 
     // If grade returned an `Option<&Vec<String>>`,
@@ -23,6 +32,6 @@ impl School {
     // By returning an owned vector instead,
     // the internal implementation is free to use whatever it chooses.
     pub fn grade(&self, grade: u32) -> Option<Vec<String>> {
-        unimplemented!()
+        None
     }
 }
