@@ -1,19 +1,21 @@
-#[allow(unused_variables)]
+use std::collections::HashSet;
+
 
 pub struct School {
+    grades: HashSet<u32>,
 }
 
 impl School {
     pub fn new() -> School {
-        unimplemented!()
+        School { grades: HashSet::new() }
     }
 
     pub fn add(&mut self, grade: u32, student: &str) {
-        unimplemented!()
+        self.grades.insert(grade);
     }
 
     pub fn grades(&self) -> Vec<u32> {
-        unimplemented!()
+        (self.grades.into_iter().collect::<Vec<u32>>()).to_vec()
     }
 
     // If grade returned an `Option<&Vec<String>>`,
