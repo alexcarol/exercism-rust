@@ -1,12 +1,14 @@
+use std::collections::HashMap;
+
 #[allow(unused_variables)]
 
 pub struct School {
-    grades: Vec<u32>,
+    grades: HashMap<u32, Vec<&str>>,
 }
 
 impl School {
     pub fn new() -> School {
-        School { grades: vec![] }
+        School { grades: HashMap::new() }
     }
 
     pub fn add(&mut self, grade: u32, student: &str) {
