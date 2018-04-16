@@ -1,4 +1,5 @@
 pub fn reverse(input: &str) -> String {
+    // TODO  use grapheme clusters
     let mut bytesInput = String::from(input).into_bytes();
     bytesInput.reverse();
 
