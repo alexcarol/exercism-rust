@@ -3,7 +3,7 @@ use std::collections::HashMap;
 #[allow(unused_variables)]
 
 pub struct School {
-    grades: HashMap<u32, Vec<&str>>,
+    grades: HashMap<u32, Vec<String>>,
 }
 
 impl School {
@@ -12,14 +12,19 @@ impl School {
     }
 
     pub fn add(&mut self, grade: u32, student: &str) {
-        self.grades.push(grade);
-        self.grades.sort();
+        if  !self.grades.contains_key(&grade) {
+            self.grades.insert(grade, vec![]);
+        }
+
+        self.grades.get_mut(&grade).unwrap().push(String::from(student));
+
+        ()
     }
 
     pub fn grades(&self) -> Vec<u32> {
         let mut last: u32 = 123412;
         self.grades
-            .iter()
+            .keys()
             .map(|grade| *grade)
             .filter(|grade| {
                 let equals_last = last == *grade;
