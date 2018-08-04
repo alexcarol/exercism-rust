@@ -16,14 +16,16 @@ impl School {
             self.grades.insert(grade, vec![]);
         }
 
-        self.grades.get_mut(&grade).unwrap().push(String::from(student));
+        let grades = self.grades.get_mut(&grade).unwrap();
+        grades.push(String::from(student));
+        grades.sort();
 
         ()
     }
 
     pub fn grades(&self) -> Vec<u32> {
         let mut last: u32 = 123412;
-        self.grades
+        let mut grades = self.grades
             .keys()
             .map(|grade| *grade)
             .filter(|grade| {
@@ -31,7 +33,11 @@ impl School {
                 last = *grade;
                 !equals_last
             })
-            .collect::<Vec<u32>>()
+            .collect::<Vec<u32>>();
+
+        grades.sort();
+
+        grades
     }
 
     // If grade returned an `Option<&Vec<String>>`,
@@ -39,6 +45,6 @@ impl School {
     // By returning an owned vector instead,
     // the internal implementation is free to use whatever it chooses.
     pub fn grade(&self, grade: u32) -> Option<Vec<String>> {
-        None
+        self.grades.get(&grade).cloned()
     }
 }
