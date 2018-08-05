@@ -9,5 +9,5 @@ pub fn find() -> Option<u32> {
         }
     }
 
-    return Option::None
+    Option::None
 }
