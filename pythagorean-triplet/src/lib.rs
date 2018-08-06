@@ -4,10 +4,10 @@ pub fn find() -> Option<u32> {
             let k = 1000 - i - j;
 
             if i * i == j * j + k * k {
-                return Option::from(i * j * k);
+                return Some(i * j * k);
             }
         }
     }
 
-    Option::None
+    None
 }
