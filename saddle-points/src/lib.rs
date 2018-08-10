@@ -19,14 +19,10 @@ pub fn find_saddle_points(input: &[Vec<u64>]) -> Vec<(usize, usize)> {
 fn is_saddle_point(i: usize, j: usize, input: &[Vec<u64>]) -> bool {
     let element = input[i][j];
 
-    input[i]
+    !input[i]
         .iter()
-        .map(|value| element < *value)
-        .filter(|element_less_than_value| *element_less_than_value)
-        .count() <= 0
-        && input
+        .any(|value| element < *value)
+        && !input
         .iter()
-        .map(|row| element > row[j])
-        .filter(|is_greater| *is_greater)
-        .count() == 0
+        .any(|row| element > row[j])
 }
