@@ -12,33 +12,30 @@ impl<'a> From<&'a str> for Brackets {
 
 impl Brackets {
     pub fn are_balanced(&self) -> bool {
-        is_string_balanced(self.s.clone())
-    }
-}
+        let mut queue = Vec::new();
 
-fn is_string_balanced(s: String) -> bool {
-    let mut queue = Vec::new();
-    let allowed_values = "[]{}()";
-    let mut pairs = HashMap::new();
-    pairs.insert('[', ']');
-    pairs.insert('{', '}');
-    pairs.insert('(', ')');
+        let mut pairs = HashMap::new();
+        pairs.insert('[', ']');
+        pairs.insert('{', '}');
+        pairs.insert('(', ')');
 
-    let sanitized_string  = s
-        .chars()
-        .filter(|c| allowed_values.chars().any(|allowed_value| *c == allowed_value));
+        let sanitized_string = self
+            .s
+            .chars()
+            .filter(|c| pairs.iter().any(|(left, right)| *c == *left || *c == *right));
 
-    for c in sanitized_string {
-        if pairs.get(&c).is_some() {
-            queue.push(c)
-        } else {
-            if pairs.get(
-            &(queue.pop().unwrap_or_default())
-            ).ne(&Some(&c)) {
-                return false
+        for c in sanitized_string {
+            if pairs.get(&c).is_some() {
+                queue.push(c)
+            } else {
+                if pairs.get(
+                    &(queue.pop().unwrap_or_default())
+                ).ne(&Some(&c)) {
+                    return false;
+                }
             }
         }
-    }
 
-    return queue.is_empty()
+        queue.is_empty()
+    }
 }
