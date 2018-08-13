@@ -1,16 +1,16 @@
 use std::collections::HashMap;
 
-pub struct Brackets {
-    s: String,
+pub struct Brackets<'a> {
+    s: &'a str,
 }
 
-impl<'a> From<&'a str> for Brackets {
-    fn from(input: &str) -> Self {
-        Brackets { s: input.to_string() }
+impl<'a> From<&'a str> for Brackets<'a> {
+    fn from(input: &'a str) -> Self {
+        Brackets { s: input }
     }
 }
 
-impl Brackets {
+impl<'a> Brackets<'a> {
     pub fn are_balanced(&self) -> bool {
         let mut queue = Vec::new();
 
