@@ -29,8 +29,8 @@ impl<'a> Brackets<'a> {
 
             if option.is_some() {
                 queue.push(option.unwrap());
-            } else if *queue.pop().unwrap_or(&' ') != c {
-                return false;
+            } else if !queue.pop().map(|queued| c == *queued).unwrap_or(false) {
+                return false
             }
         }
 
