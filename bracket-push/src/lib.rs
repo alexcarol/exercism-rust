@@ -25,10 +25,8 @@ impl<'a> Brackets<'a> {
             .filter(|c| pairs.iter().any(|(left, right)| *c == *left || *c == *right));
 
         for c in sanitized_string {
-            let option = pairs.get(&c);
-
-            if option.is_some() {
-                queue.push(option.unwrap());
+            if let Some(closing_bracket) = pairs.get(&c) {
+                queue.push(closing_bracket);
             } else if !queue.pop().map(|queued| c == *queued).unwrap_or(false) {
                 return false
             }
