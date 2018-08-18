@@ -1,4 +1,4 @@
-#[derive(PartialEq,  Debug)]
+#[derive(PartialEq, Debug)]
 pub enum Comparison {
     Equal,
     Unequal,
@@ -7,31 +7,32 @@ pub enum Comparison {
 }
 
 pub fn sublist<T>(v: &[T], w: &[T]) -> Comparison
-where T: PartialEq {
+    where T: PartialEq {
     if v.len() == w.len() {
-        if w
-            .iter()
-            .enumerate()
-            .all(|(pos, value)| *value == v[pos]) {
+        if v == w {
             Comparison::Equal
         } else {
             Comparison::Unequal
         }
-
     } else if v.len() < w.len() {
-        if w
-            .iter()
-            .enumerate()
-            .any(|(pos, _)| pos + v.len() <= w.len() && sublist(v, &w[pos .. pos + v.len()]) == Comparison::Equal) {
+        if is_sublist(v, w) {
             Comparison::Sublist
         } else {
             Comparison::Unequal
         }
     } else {
-        if sublist(w, v) == Comparison::Sublist {
+        if is_sublist(w, v) {
             Comparison::Superlist
         } else {
             Comparison::Unequal
         }
     }
+}
+
+fn is_sublist<T>(v: &[T], w: &[T]) -> bool
+    where T: PartialEq {
+    w
+        .iter()
+        .enumerate()
+        .any(|(pos, _)| pos + v.len() <= w.len() && v == &w[pos..pos + v.len()])
 }
