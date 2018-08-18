@@ -31,8 +31,5 @@ pub fn sublist<T>(v: &[T], w: &[T]) -> Comparison
 
 fn is_sublist<T>(v: &[T], w: &[T]) -> bool
     where T: PartialEq {
-    w
-        .iter()
-        .enumerate()
-        .any(|(pos, _)| pos + v.len() <= w.len() && v == &w[pos..pos + v.len()])
+    v.is_empty() || w.windows(v.len()).any(|w_window| v == w_window)
 }
