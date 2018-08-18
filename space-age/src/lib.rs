@@ -3,12 +3,14 @@
 
 #[derive(Debug)]
 pub struct Duration {
-    seconds: f64,
+    seconds: u64,
 }
 
 impl From<u64> for Duration {
-    fn from(s: u64) -> Self {
-        Self { seconds: s as f64 }
+    fn from(seconds: u64) -> Self {
+        Duration {
+            seconds,
+        }
     }
 }
 
@@ -46,7 +48,7 @@ impl Planet for Venus {
 
 impl Planet for Earth {
     fn years_during(d: &Duration) -> f64 {
-        d.seconds / 31557600.0
+        d.seconds as f64 / 31557600.0
     }
 }
 
